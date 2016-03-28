@@ -1,3 +1,5 @@
+import Immutable from 'immutable';
+
 class BaseService {
 
     static addListItem(entry) {
@@ -22,7 +24,7 @@ class BaseService {
     }
 
     static createStore (reducer) {
-        let state = [];
+        let state = new Immutable.List();
         let listeners = [];
 
         const getState = () => state;
@@ -45,21 +47,14 @@ class BaseService {
 
     };
 
-    static baseReducer(state = [], action) {
+    static baseReducer(state = new Immutable.List(), action) {
         switch (action.type) {
             case BaseService.action.ADD_ENTRY:
-                return [...state, action.entry];
+                return state.push(action.entry);
             case BaseService.action.DELETE_ENTRY:
-                return [
-                    ...state.slice(0, action.entry),
-                    ...state.slice(action.entry + 1)
-                ];
+                return state.delete(action.entry);
             case BaseService.action.EDIT_ENTRY:
-                return [
-                    ...state.slice(0, index),
-                    state[index] + 1,
-                    ...state.slice(index + 1)
-                ];
+                return state.insert(action.entry);
             default:
                 return state;
         }
