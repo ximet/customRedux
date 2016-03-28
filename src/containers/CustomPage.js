@@ -8,7 +8,7 @@ class CustomPage extends Component {
     render() {
         return (
             <div>
-                <p>Main Page</p>
+                <p>Custom Page</p>
             </div>
         );
     }
